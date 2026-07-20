@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { RouterProvider } from 'react-router'
 import { router } from './apps.routes'
+import { AuthProvider } from './features/auth.context'
 
 
 function App() {
@@ -8,7 +9,9 @@ function App() {
 
   return (
     <>
+    <AuthProvider>
         <RouterProvider router={router} />
+        </AuthProvider>
     </>
   )
 }

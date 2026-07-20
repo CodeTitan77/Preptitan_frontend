@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
+import { useAuth } from '../features/hooks/useAuth';
 
 const Login = () => {
     const navigate=useNavigate();
+    const {loading,handleLogin}=useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const onClickHandler = (e) => {
-    e.preventDefault();
-    const nobj={
-        email,
-        password
-    }
-    console.log(nobj);
-  }
+  // const onClickHandler = (e) => {
+  //   e.preventDefault();
+  //   const nobj={
+  //       email,
+  //       password
+  //   }
+  //   console.log(nobj);
+  // }
 
   return (
     <div
