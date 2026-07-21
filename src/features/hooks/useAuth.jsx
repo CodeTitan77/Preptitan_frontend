@@ -1,16 +1,19 @@
 import { useContext } from "react";
 import { AuthContext } from "../auth.context";
-import { login, register,logout } from "../api.auth";
+import { login, register,logout, getMe } from "../api.auth";
+import { useNavigate } from "react-router";
 
 
 export const useAuth=()=>{
     const {user,setUser,loading,setLoading}= useContext(AuthContext);
+    const navigate=useNavigate();
 
    const handleLogin = async ({ email, password }) => {
         setLoading(true)
         try {
             const data = await login({ email, password })
-            setUser(data.user)
+            setUser(data.user);
+            navigate('/');
         } catch (err) {
             console.log(err);
 
@@ -43,6 +46,7 @@ export const useAuth=()=>{
             setLoading(false)
         }
     }
+   
 
      return { user, loading, handleRegister, handleLogin, handleLogout }
 
