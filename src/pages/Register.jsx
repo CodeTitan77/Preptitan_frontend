@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
+import { useAuth } from '../features/hooks/useAuth';
 
 const Register = () => {
         const navigate=useNavigate();
@@ -7,11 +8,16 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+   const {handleRegister}=useAuth();
 
   const onClickHandler = (e) => {
-    e.preventDefault();
-    const nobj = { username, email, password }
-    console.log(nobj);
+     try{
+       e.preventDefault();
+       handleRegister({email,password,username});
+    }
+    catch(error){
+      console.log(error);
+    }
   }
 
   return (
