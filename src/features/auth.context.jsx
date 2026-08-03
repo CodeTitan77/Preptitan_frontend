@@ -6,6 +6,7 @@ export const AuthProvider= ({children})=>{
     const [loading,setLoading]=useState(true);
     const [user,setUser]=useState(null);
      useEffect(()=>{
+        
         const getSetUser= async() =>{
             try{
               const data = await getMe();
