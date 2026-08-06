@@ -1,14 +1,16 @@
 import React, { useState, useRef } from "react";
-import { useInterview } from "../hook/useInterview";
+import { useInterview } from "../hook/useInterview.jsx";
+import { useNavigate } from "react-router";
 
 const Home = () => {
-     const {loading,generateReport }=useInterview();
+     const {loading,generateReport}=useInterview();
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
   const [resumeFile, setResumeFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const fileInputRef = useRef(null);
+  const navigate=useNavigate();
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -50,10 +52,22 @@ const Home = () => {
   };
 
   const handleGenerate = async () => {
-    if (!resumeFile || !jobDescription.trim()) return;
-    setIsGenerating(true);
-    // API call goes here
-    setTimeout(() => setIsGenerating(false), 2000);
+     if (!resumeFile || !jobDescription.trim()) return;
+    try{
+      setIsGenerating(true);
+      const res= await generateReport({jobDescription,selfDescription,resumeFile});
+        if (res?._id) {
+    navigate(`/interview/${res._id}`)
+  }
+
+
+    }
+    catch(error){
+      console.log(error.message);
+    }
+    finally{
+      setIsGenerating(false);
+    }
   };
 
   const isReady = resumeFile && jobDescription.trim().length > 0;
